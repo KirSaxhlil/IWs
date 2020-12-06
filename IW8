@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+
+struct PLANE {
+    char name[20];
+    int num;
+    float time;
+};
+
+void main()
+{
+    setlocale(LC_ALL, "Russian");
+    int i, N, tmp;
+    float srt = 0;
+    bool one = false;
+    PLANE pln[20];
+    cin >> N;
+    for (i = 0; i < N; i++) {
+        cout << "-----------------------" << endl;
+        cout << "Пункт назначения: ";
+        cin >> pln[i].name;
+        cout << "Номер рейса: ";
+        cin >> pln[i].num;
+        cout << "Время в пути: ";
+        cin >> pln[i].time;
+
+        srt += pln[i].time;
+    }
+    srt /= N;
+    cout << "-----------------------" << endl;
+    cout << "Результат:" << endl;
+    cout << "-----------------------" << endl;
+
+    for (i = 0; i < N; i++) {
+        if (pln[i].time - srt >= 1) {
+            tmp = pln[i].num;
+            while (tmp) {
+                if (tmp % 10 == 1) {
+                    one = true;
+                    break;
+                }
+                tmp /= 10;
+            }
+            if (!one) {
+                cout << "Пункт назначения: " << pln[i].name << endl;
+                cout << "Номер рейса: " << pln[i].num << endl;
+                cout << "Время в пути: " << pln[i].time << endl;
+                cout << "-----------------------" << endl;
+            }
+        }
+    }
+    system("pause");
+}
+
+/*
+Описать структуру с именем PLANE, содержащую: название пункта назначения рейса, номер рейса, время в пути.
+Вывести инфу о рейсах, время в пути которых больше среднего не менее чем на 1 час, а в номере рейса нет цифры 1.
+
+3
+Петрожопск
+874234
+13
+Кирика
+129377
+12
+оаппрло
+38489
+14
+
+*/
