@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+int DigitSum(int K) {
+    int s = 0;
+    while (K) {
+        s += K % 10;
+        K /= 10;
+    }
+    return s;
+}
+
+void main()
+{
+    setlocale(LC_ALL, "Russian");
+    int a[20], N, i, p = 0, max_p = 0;
+    cout << "Кол-во чисел: ";
+    cin >> N;
+    cout << "Числа: ";
+    for (i = 0; i < N; i++) {
+        cin >> a[i];
+    }
+
+    for (i = 0; i < N; i++) {
+        if (DigitSum(a[i]) >= 15) {
+            p++;
+        }
+        else {
+            if(max_p < p) max_p = p;
+            p = 0;
+        }
+    }
+
+    cout << "Результат: " << max_p << endl;
+    system("pause");
+}
+
+
+/*
+Описать функцию DigitSum(K), находящую сумму цифр целого положительного К.
+С помощью этой функции в последовательности из N элементов найти наибольшее количество идущих подряд элементов, сумма цифр у которых не меньше 15.
+
+13
+13 76 46 93 38 354 48 997 5778 736 65 7 83
+
+*/
