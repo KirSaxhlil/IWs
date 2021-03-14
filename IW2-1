@@ -1,0 +1,150 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+struct List {
+	string word;
+	List* next;
+};
+
+List* MakeList() {
+	List* list = new(List);
+	List* p, *r;
+	string x;
+	cout << "Введите список (оканчивается \"0\"):" << endl;
+	cin >> x;
+	p = list;
+	while (x != "0") {
+		r = new(List);
+		r->word = x;
+		p->next = r;
+		p = r;
+		cin >> x;
+	}
+	p->next = NULL;
+	return list;
+}
+
+void DeleteNonSymmetric(List* list) {
+	List* p, *pr;
+	p = list->next;
+	pr = list;
+	bool sym;
+	while (p != NULL) {
+		sym = true;
+		for (int i = 0; i < p->word.length() / 2; i++) {
+			if (p->word[i] != p->word[p->word.length() - 1 - i]) sym = false;
+		}
+		if (!sym) {
+			pr->next = p->next;
+			delete p;
+			p = pr->next;
+		}
+		else {
+			pr = p;
+			p = p->next;
+		}
+	}
+}
+
+void InsertWord(List* list) {
+	List* p, * r;
+	p = list;
+	while (p->next != NULL) {
+		if (p->next->word == "one") {
+			r = new(List);
+			r->word = "two";
+			r->next = p->next;
+			p->next = r;
+			p = r;
+		}
+		p = p->next;
+	}
+}
+
+void PrintList(List* list) {
+	List* p;
+	p = list->next;
+	cout << "--------------" << endl;
+	while (p != NULL) {
+		cout << p->word << endl;
+		p = p->next;
+	}
+}
+
+void main() {
+	setlocale(LC_ALL, "Russian");
+	List* list = MakeList();
+	InsertWord(list);
+	cout << "Добавление \"two\":" << endl;
+	PrintList(list);
+	DeleteNonSymmetric(list);
+	cout << "Удаление несимметричных слов:" << endl;
+	PrintList(list);
+	system("pause");
+}
+
+
+/*
+	Описать процедуру, которая:
+	а) удаляет из списка L все несимметричные слова
+	б) вставляет за каждым словом "one" слово "two"
+
+
+	Пример 1:
+		Ввод:
+agaga
+one
+kek
+looooll
+mim
+one
+mega
+0
+		Вывод:
+Добавление "two":
+--------------
+agaga
+two
+one
+kek
+looooll
+mim
+two
+one
+mega
+Удаление несимметричных слов:
+--------------
+agaga
+kek
+mim
+
+	Пример 2:
+		Ввод:
+bruh
+one
+one
+one
+lol
+mimasamim
+jegej
+0
+		Вывод:
+Добавление "two":
+--------------
+bruh
+two
+one
+two
+one
+two
+one
+lol
+mimasamim
+jegej
+Удаление несимметричных слов:
+--------------
+lol
+mimasamim
+jegej
+*/
