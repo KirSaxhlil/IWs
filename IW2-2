@@ -1,0 +1,35 @@
+#include<iostream>
+#include"ListS.h"
+#include"OListS.h"
+using namespace std;
+
+void main() {
+	List<int>* list = ListS_Make<int>();
+	OList<int>* olist = OListS_Make<int>();
+	int x;
+	cin >> x;
+	while (x) {
+		ListS_Add(list, x);
+		cin >> x;
+	}
+	int max = ListS_Get(list, 1), min = ListS_Get(list, 1), i;
+	List<int>* obj = list->next;
+	while(obj != NULL) {
+		if (obj->info < min) min = obj->info;
+		if (obj->info > max) max = obj->info;
+		obj = obj->next;
+	}
+
+	obj = list->next;
+	while (obj != NULL) {
+		if (obj->info <= max - min) OListS_Add(olist, obj->info);
+		obj = obj->next;
+	}
+
+	OList<int>* tmp = olist->next;
+	while (tmp != NULL) {
+		cout << tmp->info << ends;
+		tmp = tmp->next;
+	}
+	system("pause");
+}
