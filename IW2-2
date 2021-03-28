@@ -4,8 +4,10 @@
 using namespace std;
 
 void main() {
+	setlocale(LC_ALL, "Russian");
 	List<int>* list = ListS_Make<int>();
 	OList<int>* olist = OListS_Make<int>();
+	cout << "Введите двунаправленный список (до 0): ";
 	int x;
 	cin >> x;
 	while (x) {
@@ -26,6 +28,7 @@ void main() {
 		obj = obj->next;
 	}
 
+	cout << "Однонаправленный список: ";
 	OList<int>* tmp = olist->next;
 	while (tmp != NULL) {
 		cout << tmp->info << ends;
