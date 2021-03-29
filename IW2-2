@@ -10,12 +10,14 @@ void main() {
 	cout << "Введите двунаправленный список (до 0): ";
 	int x;
 	cin >> x;
+	List<int>* obj = list;
 	while (x) {
-		ListS_Add(list, x);
+		ListS_Add(obj, x);
+		obj = obj->next;
 		cin >> x;
 	}
-	int max = ListS_Get(list, 1), min = ListS_Get(list, 1), i;
-	List<int>* obj = list->next;
+	int max = ListS_Get(list, 1), min = ListS_Get(list, 1);
+	obj = list->next;
 	while(obj != NULL) {
 		if (obj->info < min) min = obj->info;
 		if (obj->info > max) max = obj->info;
@@ -23,16 +25,33 @@ void main() {
 	}
 
 	obj = list->next;
+	OList<int>* tmp = olist;
 	while (obj != NULL) {
-		if (obj->info <= max - min) OListS_Add(olist, obj->info);
+		if (obj->info <= max - min) {
+			OListS_Add(tmp, obj->info);
+			tmp = tmp->next;
+		}
 		obj = obj->next;
 	}
 
 	cout << "Однонаправленный список: ";
-	OList<int>* tmp = olist->next;
+	tmp = olist->next;
 	while (tmp != NULL) {
 		cout << tmp->info << ends;
 		tmp = tmp->next;
 	}
 	system("pause");
 }
+
+/*
+Дан двунаправленный список целых чисел. Получить однонаправленный список, содержащий все элементы исходного,
+значения которых не превосходят разности максимального и минимального значения элементов исходного списка.
+
+Пример 1:
+Ввод: 1 2 3 4 5 0
+Вывод: 1 2 3 4
+
+Пример 2:
+Ввод: 8 3 4 9 3 10 0
+Вывод: 3 4 3
+*/
