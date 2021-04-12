@@ -1,0 +1,84 @@
+#include<iostream>
+using namespace std;
+
+struct Tree {
+	int info;
+	Tree* L, * R;
+};
+
+void add(Tree* tree, int x) {
+	if (x > tree->info) {
+		if (tree->R == NULL) {
+			Tree* r = new(Tree);
+			r->info = x;
+			r->L = NULL;
+			r->R = NULL;
+			tree->R = r;
+		}
+		else add(tree->R, x);
+	} else if (x < tree->info) {
+		if (tree->L == NULL) {
+			Tree* r = new(Tree);
+			r->info = x;
+			r->L = NULL;
+			r->R = NULL;
+			tree->L = r;
+		}
+		else add(tree->L, x);
+	}
+}
+
+int ql(Tree* tree) {
+	if (tree != NULL) {
+		if (tree->L == NULL && tree->R == NULL) return 1;
+		else return ql(tree->L) + ql(tree->R);
+	}
+	else return 0;
+}
+
+int suml(Tree* tree) {
+	if (tree != NULL) {
+		if (tree->L == NULL && tree->R == NULL) return tree->info;
+		else return suml(tree->L) + suml(tree->R);
+	}
+	else return 0;
+}
+
+int arifm(Tree* tree) {
+	return suml(tree) / ql(tree);
+}
+
+int umn(Tree* tree, int x) {
+	if (tree != NULL) {
+		if (tree->info < x) return 1 + umn(tree->L, x) + umn(tree->R, x);
+		else return umn(tree->L, x) + umn(tree->R, x);
+	}
+	else return 0;
+}
+
+void main() {
+	Tree* tree = new(Tree);
+	int x;
+	cin >> tree->info;
+	tree->L = NULL;
+	tree->R = NULL;
+	cin >> x;
+	while (x) {
+		add(tree, x);
+		cin >> x;
+	}
+	cout << umn(tree, arifm(tree)) << endl;
+	system("pause");
+}
+
+/*
+Дано дерево двоичного поиска. Найти количество элементов дерева меньших среднего арифметического листьев дерева.
+
+Пример 1:
+Ввод: 8 4 3 5 11 18 10 2 1 6 0
+Вывод: 6
+
+Пример 2:
+Ввод: 1 2 8 3 20 21 19 4 7 12 10 0
+Вывод: 7
+*/
