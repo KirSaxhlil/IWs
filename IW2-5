@@ -1,0 +1,36 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+void main() {
+	ifstream input("f.txt");
+	ofstream output("g.txt");
+	int x;
+
+	while (input >> x) {
+		if (x % 2 == 0) output << x << ends;
+	}
+	input.close();
+	input.open("f.txt");
+
+	while (input >> x) {
+		if (x % 2 == 1) output << x << ends;
+	}
+	input.close();
+	output.close();
+}
+
+/*
+* Дан файл f, компонентами которого являются целые числа. Переписать в файл g сначала все чётные, потом все нечётные компоненты файла f.
+Пример 1:
+1 2 3 4 5 6 7 8 9 0 10 12 11 13 14 15 16 17 18 19 20
+2 4 6 8 0 10 12 14 16 18 20 1 3 5 7 9 11 13 15 17 19
+
+Пример 2:
+32 11 14 15 64 32 78 2 45 677 4 115 876 33
+32 14 64 32 78 2 4 876 11 15 45 677 115 33
+
+Пример 3:
+32 11 14 15 64 32 78 2 45 677 4 115 876 3
+㈳㄀4㐶㌀2㠷㈀㐀㠀㘷㄀1㔱㐀5㜶7ㄱ53
+*/
